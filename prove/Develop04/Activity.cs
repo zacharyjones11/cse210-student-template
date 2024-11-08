@@ -43,7 +43,19 @@ public class Activity
 
     protected void ShowSpinner(int seconds)
     {
-        List<string> animationStrings = ["|", "/", "-", "\\"];
+        List<string> animationStrings = [
+        "",
+        "■",
+        "■■",
+        "■■■",
+        "■■■■",
+        "■■■■■",
+        "■■■■■■",
+        "■■■■■■■",
+        "■■■■■■■■",
+        "■■■■■■■■■",
+        "■■■■■■■■■■"
+        ];
 
         DateTime startTime = DateTime.Now;
         DateTime endTime = startTime.AddSeconds(seconds);
@@ -54,8 +66,10 @@ public class Activity
         {
             string s = animationStrings[i];
             Console.Write(s);
-            Thread.Sleep(100);
-            Console.Write("\b \b");
+            Thread.Sleep(150);
+            Console.Write(new string('\b', s.Length));  
+            Console.Write(new string(' ', s.Length));   
+            Console.Write(new string('\b', s.Length));
 
             i++;
             if (i >= animationStrings.Count)
