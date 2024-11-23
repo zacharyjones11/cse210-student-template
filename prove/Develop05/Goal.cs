@@ -1,21 +1,51 @@
-public class Goal
+public abstract class Goal
 {
     protected string _name;
     protected string _description;
-    protected string _checkBox;
+    protected bool _isComplete;
     protected int _pointValue;
 
-    public Goal(string name, string _description, string checkBox, int _pointValue)
+    public Goal(string name, string description, int pointValue)
     {
         _name = name;
         _description = description;
-        _checkBox = checkBox;
+        _isComplete = false;
         _pointValue = pointValue;
     }
 
-    public abstract Goal userGoal()
+public string Name 
+{
+    get 
     {
-        return 0;
-    } 
+        return _name;
+    }
+}
+
+public string Description 
+{
+    get 
+    {
+        return _description;
+    }
+}
+
+public bool IsComplete
+{
+    get
+    {
+        return _isComplete;
+    }
+}
+
+public int PointValue
+{
+    get
+    {
+        return _pointValue;
+    }
+}
+
+public abstract int RecordEvent();
+public abstract string GetDetailsString();
 
 }
