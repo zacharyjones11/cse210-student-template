@@ -1,72 +1,73 @@
-using System;
-
 class Scripture
 {
-    public ScriptureReference _reference {get; private set; }
-    public List<Word> _words = new();
+    private ScriptureReference reference;
+    private List<Word> words;
 
-    public bool AllHiddenWords => _words.All(w => w._isHidden);
+    public bool AllHiddenWords 
+    { 
+        get 
+        {
+            return words.TrueForAll(w => w.IsHidden());
+        } 
+    }
 
     public Scripture(ScriptureReference reference, string text)
     {
-        _reference = reference;
+        this.reference = reference;
         string[] wordArray = text.Split(' ');
-        _words = new List<Word>();
+        words = new List<Word>();
         
         foreach (string wordText in wordArray)
         {
-            _words.Add(new Word(wordText));
+            words.Add(new Word(wordText));
         }
     }
 
-    // Simplified HideRandomWords method
+    public ScriptureReference GetReference()
+    {
+        return reference;
+    }
+
+    public void SetReference(ScriptureReference reference)
+    {
+        this.reference = reference;
+    }
+
+    public List<Word> GetWords()
+    {
+        return new List<Word>(words); // Return a copy to prevent direct modification
+    }
+
+    // Modified to hide just 1 word at a time
     public void HideRandomWords(int numberToHide)
     {
         Random random = new Random();
         
-        // Create a list of indices for words that aren't hidden
         List<int> unhiddenWordIndices = new List<int>();
         
-        // Find all unhidden words
-        for (int i = 0; i < _words.Count; i++)
+        for (int i = 0; i < words.Count; i++)
         {
-            if (!_words[i]._isHidden)
+            if (!words[i].IsHidden())
             {
                 unhiddenWordIndices.Add(i);
             }
         }
 
-        // Determine how many words to hide
-        int wordsToHide = numberToHide;
-        if (wordsToHide > unhiddenWordIndices.Count)
+        if (unhiddenWordIndices.Count == 0)
         {
-            wordsToHide = unhiddenWordIndices.Count;
+            return;
         }
 
-        // Hide random words
-        for (int i = 0; i < wordsToHide; i++)
-        {
-            if (unhiddenWordIndices.Count == 0)
-            {
-                break;
-            }
-
-            // Get a random index from our list of unhidden word indices
-            int randomIndex = random.Next(unhiddenWordIndices.Count);
-            
-            // Hide the word at this position
-            _words[unhiddenWordIndices[randomIndex]].Hide();
-            
-            // Remove this index from our list
-            unhiddenWordIndices.RemoveAt(randomIndex);
-        }
+        int randomIndex = random.Next(unhiddenWordIndices.Count);
+        
+        words[unhiddenWordIndices[randomIndex]].Hide();
     }
 
     public string GetDisplayText()
     {
-        string displayText = _reference.GetDisplayText() + "\n";
+        string displayText = reference.GetDisplayText() + "\n";
         
-        foreach (Word word in _words)
+        foreach (Word word in words)
         {
             displayText += word.GetDisplayText() + " ";
         }

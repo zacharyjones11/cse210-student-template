@@ -11,6 +11,7 @@ public class ChecklistGoal : Goal
         _current = 0;
         _bonusPoints = bonusPoints;
     }
+    
 
     public int Target
     {

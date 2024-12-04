@@ -1,13 +1,32 @@
 class Word
 {
     private string _wordText;
-    public bool _isHidden;
-
+    private bool _isHidden;
 
     public Word(string text)
     {
         _wordText = text;
         _isHidden = false;
+    }
+
+    public string GetWordText()
+    {
+        return _wordText;
+    }
+
+    public void SetWordText(string text)
+    {
+        _wordText = text;
+    }
+
+    public bool IsHidden()
+    {
+        return _isHidden;
+    }
+
+    public void SetHidden(bool hidden)
+    {
+        _isHidden = hidden;
     }
 
     public void Hide()
@@ -17,7 +36,6 @@ class Word
 
     public string GetDisplayText()
     {
-        // If hidden, show underscores; if not, show the word
         return _isHidden ? new string('_', _wordText.Length) : _wordText;
     }
 }
