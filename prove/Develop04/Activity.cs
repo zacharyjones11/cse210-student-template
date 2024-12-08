@@ -1,5 +1,3 @@
-using System;
-using System.Threading;
 
 public class Activity
 {
@@ -14,7 +12,7 @@ public class Activity
     }
 
     
-
+    
     public void DisplayStartingMessage()
     {
         Console.Clear();
